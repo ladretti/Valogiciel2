@@ -1,5 +1,7 @@
+bankAccountApp/ACHServiceImplTest.class
 bankAccountApp/BankAccountTest.class
 bankAccountApp/PersonTest.class
+bankAccountApp/BankAccountEdgeCasesTest.class
 bankAccountApp/AllTests.class
 bankAccountApp/ACHServiceTest.class
 bankAccountApp/BankTest.class

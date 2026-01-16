@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BankAccountApp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BankAccountApp</a> &gt; <a href="index.source.html" class="el_package">bankAccountApp</a> &gt; <span class="el_source">BankAccountApp.java</span></div><h1>BankAccountApp.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bankAccountApp;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author jay
+ */
+<span class="nc" id="L14">public class BankAccountApp {</span>
+
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String[] args) {
+		// TODO code application logic here
+		// Person accountHolder = null;
+		// BankAccount acc1 = null;
+<span class="fc" id="L23">		String operation = &quot;&quot;;</span>
+<span class="fc" id="L24">		boolean endProgram = false;</span>
+<span class="fc" id="L25">		String options = &quot;&quot;;</span>
+<span class="fc" id="L26">		int number = 0;</span>
+		// double averageBalance = 0;
+<span class="fc" id="L28">		boolean mainmenu = true;</span>
+<span class="fc" id="L29">		boolean notMainMenu = false;</span>
+<span class="fc" id="L30">		boolean newAccountOperations = false;</span>
+<span class="fc" id="L31">		int ifloadaccManager = 0;</span>
+<span class="fc" id="L32">		Scanner scan = new Scanner(System.in);</span>
+<span class="fc" id="L33">		Bank accManager = new Bank();</span>
+<span class="fc" id="L34">		BankAccount bankAccountManager = new BankAccount();</span>
+<span class="fc" id="L35">		String text = &quot;C:\\Users\\jay4k\\Desktop\\stuff\\Bankaccountinfo\\BankAccountinfotext.text&quot;;</span>
+		// accountsLoaded = bankAccountManager.loadFromText(text);
+<span class="fc" id="L37">		accManager.setAccountsLoaded(bankAccountManager.loadFromText(text));</span>
+
+<span class="fc" id="L39">		System.out.println(&quot;Loaded &quot; + accManager.getAccountsLoaded() + &quot; accounts.&quot;);</span>
+
+<span class="fc bfc" id="L41" title="All 2 branches covered.">		while (endProgram == false) {</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">			while (mainmenu == true) {</span>
+
+<span class="fc" id="L44">				System.out.println(&quot;To create a new account enter new,  &quot; + &quot;\n&quot;</span>
+						+ &quot;to perform operations in an existing account enter account , &quot; + &quot;\n&quot;
+						+ &quot;To delete an existing account enter delete &quot; + &quot;\n&quot;
+						+ &quot;to diplay the average of all account balances enter Average &quot; + &quot;\n&quot;
+						+ &quot;To display the maximum account balance enter maximum&quot; + &quot;\n&quot;
+						+ &quot;to display the minimum account balance enter minimum&quot; + &quot;\n&quot; + &quot;to quit enter quit&quot;);
+
+<span class="fc" id="L51">				options = scan.next();</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">				if (options.equalsIgnoreCase(&quot;new&quot;)) {</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">					if (accManager.getAccountsLoaded() &gt; 0) {</span>
+<span class="nc" id="L54">						ifloadaccManager = 2;</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">					} else if (accManager.getAccountsLoaded() == 0) {</span>
+<span class="nc" id="L56">						ifloadaccManager = 0;</span>
+					}
+<span class="nc" id="L58">					notMainMenu = true;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">					while (notMainMenu == true) {</span>
+<span class="nc" id="L60">						System.out.println(</span>
+								&quot;Enter account holder's name, gender, age,weight, height, hair color, eye color, email, &quot;
+										+ &quot; initial amount of money,withdraw limit and date created&quot;);
+<span class="nc" id="L63">						String name = scan.next();</span>
+<span class="nc" id="L64">						char gender = scan.next().charAt(0);</span>
+<span class="nc" id="L65">						int age = scan.nextInt();</span>
+<span class="nc" id="L66">						float weight = scan.nextFloat();</span>
+<span class="nc" id="L67">						float height = scan.nextFloat();</span>
+<span class="nc" id="L68">						String hairColor = scan.next();</span>
+<span class="nc" id="L69">						String eyeColor = scan.next();</span>
+<span class="nc" id="L70">						String email = scan.next();</span>
+<span class="nc" id="L71">						double initMoneyAmount = scan.nextDouble();</span>
+<span class="nc" id="L72">						double withdrawLimit = scan.nextDouble();</span>
+<span class="nc" id="L73">						String dateCreated = scan.next();</span>
+<span class="nc" id="L74">						Person accountHolder = null;</span>
+						try {
+<span class="nc" id="L76">							accountHolder = new Person(name, gender, age, weight, height, hairColor, eyeColor,</span>
+									email);
+<span class="nc" id="L78">						} catch (Exception e) {</span>
+<span class="nc" id="L79">							e.printStackTrace();</span>
+<span class="nc" id="L80">						}</span>
+<span class="nc" id="L81">						BankAccount acc1 = new BankAccount(initMoneyAmount, withdrawLimit, dateCreated, accountHolder);</span>
+
+<span class="nc" id="L83">						accManager.addAccount(acc1, ifloadaccManager);</span>
+<span class="nc" id="L84">						System.out.println(&quot;Your account number is &quot; + acc1.getAccountNumber());</span>
+<span class="nc" id="L85">						newAccountOperations = true;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">						while (newAccountOperations == true) {</span>
+<span class="nc" id="L87">							System.out.println(&quot;Enter one of these operations:&quot; + &quot;/n&quot;</span>
+									+ &quot; DEPOSIT, WITHDRAW, BALANCE, or MAINMENU &quot;);
+<span class="nc" id="L89">							operation = scan.next();</span>
+
+<span class="nc bnc" id="L91" title="All 2 branches missed.">							if (operation.equalsIgnoreCase(&quot;BALANCE&quot;)) {</span>
+<span class="nc" id="L92">								System.out.println(&quot;Balance is: &quot; + acc1.getBalance());</span>
+							}
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">							if (operation.equalsIgnoreCase(&quot;DEPOSIT&quot;)) {</span>
+<span class="nc" id="L96">								System.out.println(&quot;Enter an amount to deposit&quot;);</span>
+<span class="nc" id="L97">								double depositAmount = scan.nextDouble();</span>
+<span class="nc" id="L98">								acc1.depositMoney(depositAmount);</span>
+							}
+<span class="nc bnc" id="L100" title="All 2 branches missed.">							if (operation.equalsIgnoreCase(&quot;WITHDRAW&quot;)) {</span>
+<span class="nc" id="L101">								System.out.println(&quot;Enter an amount to withdraw&quot;);</span>
+<span class="nc" id="L102">								double withdrawAmount = scan.nextDouble();</span>
+<span class="nc" id="L103">								boolean success = acc1.withdrawMoney(withdrawAmount);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">								if (success == false) {</span>
+<span class="nc" id="L105">									System.out.println(&quot;Unable to complete transaction&quot;</span>
+											+ &quot; because of insufficient funds or reached&quot; + &quot; withdraw limit. &quot;);
+								}
+							}
+
+<span class="nc bnc" id="L110" title="All 2 branches missed.">							if (operation.equalsIgnoreCase(&quot;MAINMENU&quot;)) {</span>
+<span class="nc" id="L111">								newAccountOperations = false;</span>
+<span class="nc" id="L112">								notMainMenu = false;</span>
+<span class="nc" id="L113">								break;</span>
+							}
+						}
+<span class="nc" id="L116">					}</span>
+				}
+
+<span class="fc bfc" id="L119" title="All 2 branches covered.">				if (options.equalsIgnoreCase(&quot;AVERAGE&quot;)) {</span>
+<span class="fc" id="L120">					System.out.println(&quot;Average of accounts is &quot; + accManager.getAverageBalance());</span>
+				}
+
+<span class="fc bfc" id="L123" title="All 2 branches covered.">				if (options.equalsIgnoreCase(&quot;MAXIMUM&quot;)) {</span>
+<span class="fc" id="L124">					System.out.println(&quot;The maximum of all accounts is &quot; + accManager.getMaximumBalance());</span>
+				}
+<span class="fc bfc" id="L126" title="All 2 branches covered.">				if (options.equalsIgnoreCase(&quot;minimum&quot;)) {</span>
+<span class="fc" id="L127">					System.out.println(&quot;The minimum of all accounts is &quot; + accManager.getMinimumBalance());</span>
+				}
+<span class="fc bfc" id="L129" title="All 2 branches covered.">				if (options.equalsIgnoreCase(&quot;quit&quot;)) {</span>
+<span class="fc" id="L130">					endProgram = true;</span>
+<span class="fc" id="L131">					mainmenu = false;</span>
+				}
+<span class="fc bfc" id="L133" title="All 2 branches covered.">				if (options.equalsIgnoreCase(&quot;delete&quot;)) {</span>
+<span class="fc" id="L134">					System.out.println(&quot;Enter account number of account to delete&quot;);</span>
+<span class="fc" id="L135">					number = scan.nextInt();</span>
+<span class="fc" id="L136">					BankAccount tmpacc = accManager.findAccount(number);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">					if (tmpacc == null) {</span>
+<span class="fc" id="L138">						System.out.println(&quot;Account dosen't exist&quot;);</span>
+<span class="fc" id="L139">						break;</span>
+					}
+<span class="nc" id="L141">					accManager.deleteAccount(number);</span>
+				}
+
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">				if (options.equalsIgnoreCase(&quot;Account&quot;)) {</span>
+<span class="nc" id="L145">					System.out.println(</span>
+							&quot;Enter one of these operations:&quot; + &quot;/n&quot; + &quot; DEPOSIT, WITHDRAW, BALANCE, MENU or QUIT. &quot;);
+<span class="nc" id="L147">					operation = scan.next();</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">					if (operation.equalsIgnoreCase(&quot;BALANCE&quot;)) {</span>
+<span class="nc" id="L149">						System.out.println(&quot;Enter Account Number&quot;);</span>
+<span class="nc" id="L150">						number = scan.nextInt();</span>
+<span class="nc" id="L151">						BankAccount tmpacc = accManager.findAccount(number);</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">						if (tmpacc == null) {</span>
+<span class="nc" id="L153">							System.out.println(&quot;Account dosen't exist&quot;);</span>
+<span class="nc" id="L154">							break;</span>
+						}
+<span class="nc" id="L156">						System.out.println(&quot;Balance is: &quot; + tmpacc.getBalance());</span>
+					}
+
+<span class="nc bnc" id="L159" title="All 2 branches missed.">					if (operation.equalsIgnoreCase(&quot;DEPOSIT&quot;)) {</span>
+<span class="nc" id="L160">						System.out.println(&quot;Enter Account number&quot;);</span>
+<span class="nc" id="L161">						number = scan.nextInt();</span>
+<span class="nc" id="L162">						BankAccount tmpacc = accManager.findAccount(number);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">						if (tmpacc == null) {</span>
+<span class="nc" id="L164">							System.out.println(&quot;Account dosen't exist&quot;);</span>
+<span class="nc" id="L165">							break;</span>
+						} else {
+<span class="nc" id="L167">							System.out.println(&quot;Enter an amount to deposit&quot;);</span>
+						}
+<span class="nc" id="L169">						double depositAmount = scan.nextDouble();</span>
+<span class="nc" id="L170">						tmpacc.depositMoney(depositAmount);</span>
+					}
+<span class="nc bnc" id="L172" title="All 2 branches missed.">					if (operation.equalsIgnoreCase(&quot;WITHDRAW&quot;)) {</span>
+<span class="nc" id="L173">						System.out.println(&quot;Enter Account number&quot;);</span>
+<span class="nc" id="L174">						number = scan.nextInt();</span>
+<span class="nc" id="L175">						BankAccount tmpacc = accManager.findAccount(number);</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">						if (tmpacc == null) {</span>
+<span class="nc" id="L177">							System.out.println(&quot;Account dosen't exist&quot;);</span>
+<span class="nc" id="L178">							break;</span>
+						} else {
+<span class="nc" id="L180">							System.out.println(&quot;Enter an amount to withdraw&quot;);</span>
+						}
+<span class="nc" id="L182">						double withdrawAmount = scan.nextDouble();</span>
+<span class="nc" id="L183">						boolean success = tmpacc.withdrawMoney(withdrawAmount);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">						if (success == false) {</span>
+<span class="nc" id="L185">							System.out.println(&quot;Unable to complete transaction&quot;</span>
+									+ &quot; because of insufficient funds or reached&quot; + &quot; withdraw limit. &quot;);
+						} else {
+<span class="nc" id="L188">							System.out.println(&quot;Withdraw succeded&quot;);</span>
+						}
+
+					}
+<span class="nc bnc" id="L192" title="All 2 branches missed.">					if (operation.equalsIgnoreCase(&quot;quit&quot;)) {</span>
+<span class="nc" id="L193">						endProgram = true;</span>
+<span class="nc" id="L194">						mainmenu = false;</span>
+					}
+<span class="nc bnc" id="L196" title="All 4 branches missed.">					if (!operation.equalsIgnoreCase(&quot;BALANCE&quot;) &amp;&amp; !operation.equalsIgnoreCase(&quot;DEPOSIT&quot;)</span>
+<span class="nc bnc" id="L197" title="All 4 branches missed.">							&amp;&amp; !operation.equalsIgnoreCase(&quot;WITHDRAW&quot;) &amp;&amp; !operation.equalsIgnoreCase(&quot;QUIT&quot;)</span>
+<span class="nc bnc" id="L198" title="All 4 branches missed.">							&amp;&amp; !operation.equalsIgnoreCase(&quot;MAXIMUM&quot;) &amp;&amp; !operation.equalsIgnoreCase(&quot;MINIMUM&quot;)</span>
+<span class="nc bnc" id="L199" title="All 4 branches missed.">							&amp;&amp; !operation.equalsIgnoreCase(&quot;AVERAGE&quot;) &amp;&amp; !operation.equalsIgnoreCase(&quot;DELETE&quot;)) {</span>
+<span class="nc" id="L200">						System.out.println(&quot;Invalid Command, please try again&quot;);</span>
+					}
+				}
+			}
+		}
+
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (scan != null)</span>
+<span class="fc" id="L207">			scan.close();</span>
+
+		try {
+<span class="fc" id="L210">			accManager.saveAccounts(accManager);</span>
+<span class="nc" id="L211">		} catch (Exception e) {</span>
+<span class="nc" id="L212">			System.out.println(&quot;Error writing to file&quot;);</span>
+		} finally {
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">			if (scan != null)</span>
+<span class="fc" id="L215">				scan.close();</span>
+		}
+<span class="fc" id="L217">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
