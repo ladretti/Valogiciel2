@@ -173,3 +173,39 @@ mvn -B clean test
 mvn -B package
 ```
 
+## Exercice 11
+
+Modifications effectuées
+
+1. Dépendances (pom.xml)
+   - Ajouté `cucumber-java` et `cucumber-junit` (version 7.15.0, scope test).
+
+2. Feature
+   - `src/test/resources/features/bank_account_basic.feature` :
+
+```
+Feature: Basic bank account behavior
+  Scenario: A new account has zero balance
+    Given I have a new bank account
+    When I check its balance
+    Then the balance should be 0
+```
+
+3. Runner
+   - `src/test/java/com/imt/mines/bank/bdd/RunBankAccountCucumberTest.java` : JUnit runner utilisant Cucumber.
+
+4. Step definitions
+   - `src/test/java/com/imt/mines/bank/bdd/BankAccountBasicSteps.java` : implémentation des étapes en utilisant l'API existante `bankAccountApp.BankAccount` :
+     - crée un `new BankAccount()` (balance initiale 0)
+     - lit le solde via `getBalance()` et compare avec la valeur attendue
+
+Exécution
+
+- Commande utilisée pour exécuter le test Cucumber :
+
+```bash
+mvn -Dtest=com.imt.mines.bank.bdd.RunBankAccountCucumberTest test
+```
+
+- Sortie : le scénario Cucumber apparaît et passe :
+  - `1 test, 0 failures, 0 errors`.
