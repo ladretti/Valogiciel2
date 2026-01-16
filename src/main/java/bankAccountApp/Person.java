@@ -22,8 +22,9 @@ public class Person {
 	private String eyeColor;
 	private String email;
 
-	public static final String DELIM = "\n";
 
+	public static final String DELIM = "\n";
+	
 	/**
 	 * Create Person
 	 * 
@@ -66,7 +67,7 @@ public class Person {
 	 * @param newHairColor
 	 * @param newEyeColor
 	 * @param newEmail
-	 * @throws Exception
+	 * @throws Exception 
 	 */
 	public Person(String newName, char newGender, int newAge, float newWeight, float newHeight, String newHairColor,
 			String newEyeColor, String newEmail) throws Exception {
@@ -85,19 +86,24 @@ public class Person {
 	 * Create Person
 	 * 
 	 * @param accountHolder
-	 * @throws Exception
+	 * @throws Exception 
 	 */
+	@SuppressWarnings("resource")
 	public Person(String accountHolder) throws Exception {
-		try (Scanner scan = new Scanner(accountHolder).useDelimiter(DELIM)) {
-			name = scan.next();
-			gender = scan.next().charAt(0);
-			age = scan.nextInt();
-			height = scan.nextFloat();
-			weight = scan.nextFloat();
-			hairColor = scan.next();
-			eyeColor = scan.next();
-			email = scan.next();
+		// parse a serialized person string using the delimiter
+		// use split with Pattern.quote to avoid regex issues
+		String[] tokens = accountHolder.split(java.util.regex.Pattern.quote(DELIM));
+		if (tokens.length < 8) {
+			throw new Exception("Invalid serialized person format: expected 8 tokens");
 		}
+		name = tokens[0];
+		gender = tokens[1].charAt(0);
+		age = Integer.parseInt(tokens[2]);
+		height = Float.parseFloat(tokens[3]);
+		weight = Float.parseFloat(tokens[4]);
+		hairColor = tokens[5];
+		eyeColor = tokens[6];
+		email = tokens[7];
 		validate();
 	}
 
@@ -136,7 +142,7 @@ public class Person {
 	 * Set Gender
 	 * 
 	 * @param newGender
-	 * @throws Exception
+	 * @throws Exception 
 	 */
 	public void setGender(char newGender) throws Exception {
 		if (validateGender(newGender)) {
@@ -171,7 +177,6 @@ public class Person {
 
 	/**
 	 * Get Height
-	 * 
 	 * @return
 	 */
 	public float getHeight() {
@@ -180,7 +185,6 @@ public class Person {
 
 	/**
 	 * Set Height
-	 * 
 	 * @param height
 	 */
 	public void setHeight(float height) {
@@ -245,21 +249,20 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	private void validate() throws Exception {
 		validateGender(gender);
 		return;
 	}
-
+	
 	/**
 	 * validate the gender
-	 * 
 	 * @param value
 	 * @return
 	 * @throws Exception
 	 */
 	private boolean validateGender(char value) throws Exception {
-		if ((value == 'M' || (value == 'F') || (value == 'm') || (value == 'f')))
+		if ((value == 'M' || (value == 'F')|| (value == 'm') || (value == 'f' )))
 			return true;
 		else
 			throw new Exception("Invalid gender: " + gender);

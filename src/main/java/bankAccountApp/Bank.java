@@ -139,9 +139,11 @@ public class Bank {
 	}
 
 	public void saveAccounts(Bank accManager) {
-		try (FileOutputStream fos = new FileOutputStream(
-				"C:\\Users\\jay4k\\Desktop\\stuff\\Bankaccountinfo\\BankAccountinfotext.text");
-				OutputStreamWriter osw = new OutputStreamWriter(fos)) {
+		FileOutputStream fos = null;
+		OutputStreamWriter osw = null;
+		try {
+			fos = new FileOutputStream("C:\\Users\\jay4k\\Desktop\\stuff\\Bankaccountinfo\\BankAccountinfotext.text");
+			osw = new OutputStreamWriter(fos);
 			for (int i = 0; i < Accounts.size(); i++) {
 				BankAccount tmp = Accounts.get(i);
 
@@ -150,7 +152,23 @@ public class Bank {
 			}
 		} catch (IOException e) {
 			System.out.println("Error writing to file");
+		} finally {
+			if (osw != null) {
+				try {
+					osw.close();
+				} catch (IOException e) {
+					// no action
+				}
+			}
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					// no action
+				}
+			}
 		}
+
 	}
 
 	public String convertToText() {
