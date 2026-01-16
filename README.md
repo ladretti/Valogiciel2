@@ -41,7 +41,7 @@
 `mvn verify` s'exécute après `mvn package` et est destiné à exécuter des tests d'intégration et à effectuer des vérifications supplémentaires (comme des contrôles de qualité du code, des analyses de sécurité, etc.) qui vont au-delà des tests unitaires. Contrairement à `test` (qui exécute des tests unitaires) et `package` (qui crée l'artefact), `verify` garantit que le package est valide et prêt pour le déploiement en exécutant des phases post-intégration-test. Dans ce cas, comme aucun test d'intégration ou plugin de vérification supplémentaire n'est configuré, `verify` se comporte de manière similaire à `package` mais inclut la phase verify pour des extensions potentielles futures.
 
 
-## Exercice 8 (report)
+## Exercice 8
 Fichiers ajoutés / modifiés
 
 - src/test/java/bankAccountApp/BankAccountEdgeCasesTest.java : nouveaux tests unitaires pour `BankAccount`.
@@ -67,7 +67,7 @@ Notes techniques
 - Des erreurs initiales provenaient d'une ancienne implémentation utilisant `Scanner` pour parser les données sérialisées de `Person`. J'ai remplacé ce parsing par un implémentation basée sur `String.split(Person.DELIM)` ce qui est plus simple et robuste pour la désérialisation dans les tests.
 - Le nouveau fichier de test se concentre sur la logique métier critique (opérations monétaires). Il complète les tests existants définis dans `src/test/java/bankAccountApp/BankAccountTest.java`.
 
-## Exercice 9 (report)
+## Exercice 9
 Actions réalisées
 
 1) Exécution initiale JaCoCo
@@ -112,3 +112,64 @@ Fichiers ajoutés
 
 - `src/test/java/bankAccountApp/ACHServiceImplTest.java`
 - `src/test/java/bankAccountApp/BankAccountAppMorePathsTest.java`
+
+## Exercice 10
+Exercice 10 — CI workflow (GitHub Actions)
+
+But: ajouter un workflow GitHub Actions basique qui exécute `mvn clean test` sur chaque push vers `main`, puis étendre pour packager et sauvegarder l'artifact `target/`.
+
+Fichiers ajoutés
+
+- `.github/workflows/ci.yml` : workflow CI qui exécute les étapes suivantes :
+  1. checkout du repo
+  2. setup JDK (Temurin 17)
+  3. cache du dépôt Maven local (`~/.m2/repository`)
+  4. `mvn -B clean test`
+  5. `mvn -B package`
+  6. upload de `target/` comme artifact de build
+
+Contenu (extrait) — fichier complet : `.github/workflows/ci.yml`
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+      - run: mvn -B clean test
+      - run: mvn -B package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: target
+          path: target/
+```
+
+Commentaire
+
+- Le workflow s'exécute sur chaque push vers `main`.
+- Le `package` permet de générer l'artefact dans `target/` (jar), puis `upload-artifact` stocke ce dossier comme résultat du run (accessible depuis l'interface Actions → job → Artifacts).
+- L'option `-B` (batch mode) est utilisée pour une sortie non interactive.
+
+Tests locaux
+
+Pour vérifier localement avant push :
+
+```bash
+mvn -B clean test
+mvn -B package
+```
+
